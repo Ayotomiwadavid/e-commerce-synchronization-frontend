@@ -17,8 +17,6 @@ export default function Page() {
   }, [])
 
   const handleSubmit = async () => {
-    setIsLoading(true)
-
     try {
      const response = await api.getProfile()
       console.log(response)
