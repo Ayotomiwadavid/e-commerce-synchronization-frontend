@@ -63,8 +63,8 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         <p className="text-sm text-sidebar-foreground/60 mt-1">Management Dashboard</p>
       </div>
 
-      <nav className="flex-1 p-4">
-        <ul className="space-y-2">
+      <nav className="flex-1 p-2">
+        <ul className="space-y-1">
           {filteredMenuItems.map((item) => {
             const Icon = item.icon
             const isActive = currentPage === item.id
@@ -74,7 +74,7 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
                 <button
                   onClick={() => onPageChange(item.id)}
                   className={cn(
-                    'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all',
+                    'w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all',
                     isActive
                       ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-sm'
                       : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground'
@@ -89,7 +89,7 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </ul>
       </nav>
 
-      <div className="p-4 border-t border-sidebar-border">
+      <div className="p-2 border-t border-sidebar-border">
         <button
           onClick={handleLogout}
           className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-red-500 hover:bg-red-500/10 hover:text-red-600 transition-all mb-4"
