@@ -11,25 +11,25 @@ interface SidebarProps {
 }
 
 const menuItems = [
-  { id: 'dashboard' as PageType, label: 'Dashboard', icon: Calendar },
-  { id: 'bookings' as PageType, label: 'Bookings', icon: BookOpen },
-  { id: 'pricing' as PageType, label: 'Pricing', icon: DollarSign },
-  { id: 'availability' as PageType, label: 'Availability', icon: ParkingSquare },
-  { id: 'logs' as PageType, label: 'Change History', icon: History },
-  { id: 'alerts' as PageType, label: 'Alerts', icon: AlertTriangle },
-  { id: 'settings' as PageType, label: 'Settings', icon: Settings },
-  { id: 'staff' as PageType, label: 'Staff', icon: Users },
+  { id: 'dashboard' as PageType, label: 'Dashboard', icon: Calendar, role: 'admin, staff' },
+  { id: 'bookings' as PageType, label: 'Bookings', icon: BookOpen, role: 'admin, staff' },
+  { id: 'pricing' as PageType, label: 'Pricing', icon: DollarSign, role: 'admin, staff' },
+  { id: 'availability' as PageType, label: 'Availability', icon: ParkingSquare, role: 'admin, staff' },
+  { id: 'logs' as PageType, label: 'Change History', icon: History, role: 'admin, staff' },
+  { id: 'alerts' as PageType, label: 'Alerts', icon: AlertTriangle, role: 'admin, staff' },
+  { id: 'settings' as PageType, label: 'Settings', icon: Settings, role: 'admin, staff' },
+  { id: 'staff' as PageType, label: 'Staff', icon: Users, role: 'admin' },
 ]
 
 export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
   const router = useRouter()
-  const [user, setUser] = useState<{ username: string; role: string } | null>(null)
+  const [user, setUser] = useState<null>(null)
 
    useEffect(() => {
      const fetchProfile = async () => {
        try {
         const profile = await api.getProfile()
-        setUser({ username: profile.username, role: profile.role })
+        setUser(profile.user)
        } catch (error) {
          console.error('Failed to load profile', error)
        }
@@ -42,11 +42,15 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
     router.push('/login')
   }
 
-  const filteredMenuItems = menuItems.filter(item => {
-    if (item.id === 'staff') {
-      return user?.role === 'admin'
-    }
-    return true
+  const filteredMenuItems = menuItems.filter((item) => {
+    const roles =
+      typeof (item as any).role === 'string'
+        ? (item as any).role.split(',').map((r: string) => r.trim().toLowerCase())
+        : undefined
+    if (!roles) return true
+    const role = (user?.role || '').toLowerCase()
+    if (!role) return false
+    return roles.includes(role)
   })
 
   return (
