@@ -54,7 +54,7 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
   })
 
   return (
-    <aside className="w-64 lg:w-64 h-full border-r border-border bg-sidebar flex flex-col">
+    <aside className="w-64 lg:w-64 h-full border-r border-border bg-sidebar flex flex-col min-h-0">
       <div className="p-6 border-b border-sidebar-border">
         <h1 className="text-xl font-semibold text-sidebar-foreground flex items-center gap-2">
           <ParkingSquare className="w-6 h-6 text-emerald-500" />
@@ -63,7 +63,7 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         <p className="text-sm text-sidebar-foreground/60 mt-1">Management Dashboard</p>
       </div>
 
-      <nav className="flex-1 p-2">
+      <nav className="flex-1 min-h-0 overflow-y-auto p-4">
         <ul className="space-y-1">
           {filteredMenuItems.map((item) => {
             const Icon = item.icon
@@ -89,7 +89,7 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </ul>
       </nav>
 
-      <div className="p-2 border-t border-sidebar-border">
+      <div className="sticky bottom-0 p-4 border-t border-sidebar-border bg-sidebar">
         <button
           onClick={handleLogout}
           className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-red-500 hover:bg-red-500/10 hover:text-red-600 transition-all mb-4"
